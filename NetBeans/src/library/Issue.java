@@ -127,24 +127,31 @@ public class Issue extends javax.swing.JFrame {
          try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root","yash@123"); 
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root",""); 
             Statement stmt = con.createStatement();
             String str="SELECT No_of_books_issued FROM LIBRARY WHERE ID='"+ID+"'";
             ResultSet rs=stmt.executeQuery(str);
-            if(rs.next())
-            {
-                nbi=rs.getInt("No_of_books_issued");
-            }
-            if(nbi<=3 && (nbi+nb)<=3){
-            //String query = "INSERT INTO Library VALUES('"+fname+"','"+lname+"','"+id+"','"+mob+"','" "','"+branch+"');" ;
-            String query="UPDATE Library SET No_of_books_issued=No_of_books_issued+'"+nb+"' WHERE ID='"+ID+"'"; 
-            stmt.executeUpdate(query);
-            JOptionPane.showMessageDialog(this,"Books issued");
-            idtextfield.setText("");
-            noofbookstextfield.setText("");
-            }
-            else{
-                JOptionPane.showMessageDialog(this,"Number of Books Limit Exceeded.\n No of books issued already - "+nbi);
+             if(rs.next()==false)
+             {
+                 JOptionPane.showMessageDialog(this,"ERROR:Invalid ID");
+             }
+             else
+             {
+                if(rs.next())
+                {
+                    nbi=rs.getInt("No_of_books_issued");
+                }
+                if(nbi<=3 && (nbi+nb)<=3){
+                //String query = "INSERT INTO Library VALUES('"+fname+"','"+lname+"','"+id+"','"+mob+"','" "','"+branch+"');" ;
+                String query="UPDATE Library SET No_of_books_issued=No_of_books_issued+'"+nb+"' WHERE ID='"+ID+"'"; 
+                stmt.executeUpdate(query);
+                JOptionPane.showMessageDialog(this,"Books issued");
+                idtextfield.setText("");
+                noofbookstextfield.setText("");
+                }
+                else{
+                    JOptionPane.showMessageDialog(this,"Number of Books Limit Exceeded.\n No of books issued already - "+nbi);
+                }
             }
         }
         catch(Exception e)

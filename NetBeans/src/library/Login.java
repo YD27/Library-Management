@@ -5,6 +5,8 @@
  */
 package library;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author yash
@@ -134,6 +136,10 @@ public class Login extends javax.swing.JFrame {
             Homepage home = new Homepage();
             home.setVisible(true);
             this.setVisible(false);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this,"ERROR:Invalid username or password" );
         }
     }//GEN-LAST:event_loginbuttonActionPerformed
 

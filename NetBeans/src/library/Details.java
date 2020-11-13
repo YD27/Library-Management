@@ -144,14 +144,18 @@ public class Details extends javax.swing.JFrame {
         // TODO add your handling code here:
         String ID=idtextfield.getText();
         DefaultTableModel model=(DefaultTableModel)table1.getModel();
-       try
+        try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root","yash@123"); 
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root",""); 
             Statement stmt = con.createStatement();
             String str="SELECT * FROM LIBRARY WHERE ID='"+ID+"'";
              ResultSet rs=stmt.executeQuery(str);
-            if(rs.next())
+             if(rs.next()==false)
+             {
+                 JOptionPane.showMessageDialog(this,"ERROR:Invalid ID");
+             }
+             else
             {
                 String fname=rs.getString("First_Name");
                 String lname=rs.getString("Last_Name");
@@ -174,7 +178,7 @@ public class Details extends javax.swing.JFrame {
        try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root","yash@123"); 
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root",""); 
             Statement stmt = con.createStatement();
             String str="SELECT * FROM LIBRARY";
             ResultSet rs=stmt.executeQuery(str);

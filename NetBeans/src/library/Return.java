@@ -138,29 +138,43 @@ public class Return extends javax.swing.JFrame {
     private void returnbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnbuttonActionPerformed
         // TODO add your handling code here:
         String ID;
-        int nb,nbi=0;
+        int nb,nbi=0,nbi1=0;
         ID=idtextfield.getText();
         nb=Integer.parseInt(nbtextfield.getText());
+        
          try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root","yash@123"); 
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root",""); 
             Statement stmt = con.createStatement();
             
-            String query="UPDATE Library SET No_of_books_issued=No_of_books_issued-'"+nb+"' WHERE ID='"+ID+"'"; 
-            stmt.executeUpdate(query);
-            JOptionPane.showMessageDialog(this,"Books Returned");
-            idtextfield.setText("");
-            nbtextfield.setText("");
-            
-            String str="SELECT No_of_books_issued FROM LIBRARY WHERE ID='"+ID+"'";
-            ResultSet rs=stmt.executeQuery(str);
-            if(rs.next())
+            String str1="SELECT No_of_books_issued FROM LIBRARY WHERE ID='"+ID+"'";
+            ResultSet rs1=stmt.executeQuery(str1);
+            if(rs1.next())
             {
-                nbi=rs.getInt("No_of_books_issued");
+                nbi1=rs1.getInt("No_of_books_issued");
             }
-           
-            JOptionPane.showMessageDialog(this,"No of books still issued - "+nbi);
+            if(nb>nbi1)
+            {
+                JOptionPane.showMessageDialog(this,"ERROR:You have only "+nbi1+" books issued");
+            }
+            else
+            {
+                String query="UPDATE Library SET No_of_books_issued=No_of_books_issued-'"+nb+"' WHERE ID='"+ID+"'"; 
+                stmt.executeUpdate(query);
+                JOptionPane.showMessageDialog(this,"Books Returned");
+                idtextfield.setText("");
+                nbtextfield.setText("");
+
+                String str="SELECT No_of_books_issued FROM LIBRARY WHERE ID='"+ID+"'";
+                ResultSet rs=stmt.executeQuery(str);
+                if(rs.next())
+                {
+                    nbi=rs.getInt("No_of_books_issued");
+                }
+
+                JOptionPane.showMessageDialog(this,"No of books still issued - "+nbi);
+            }
         }
         catch(Exception e)
         {

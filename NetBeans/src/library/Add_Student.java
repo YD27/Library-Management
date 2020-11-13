@@ -174,7 +174,7 @@ public class Add_Student extends javax.swing.JFrame {
         try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root","yash@123"); 
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yash","root",""); 
             Statement stmt = con.createStatement();
             //String query = "INSERT INTO Library VALUES('"+fname+"','"+lname+"','"+id+"','"+mob+"','" "','"+branch+"');" ;
             String query="INSERT INTO Library VALUES('"+fname+"','"+lname+"','"+branch+"','"+id+"','"+mob+"','"+0+"');";
